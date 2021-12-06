@@ -1,8 +1,8 @@
-name: Playwright
+name: PlaywrightChen
 
 on:
   push:
-  pull_request:
+    branches: [testchen]
 
 jobs:
   build-plugin:
@@ -16,27 +16,27 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 14.x
-      - name: Cache node modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+#       - name: Cache node modules
+#         uses: actions/cache@v2
+#         env:
+#           cache-name: cache-node-modules
+#         with:
+#           path: ~/.npm
+#           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+#           restore-keys: |
+#             ${{ runner.os }}-build-${{ env.cache-name }}-
+#             ${{ runner.os }}-build-
+#             ${{ runner.os }}-
       - name: Install dependencies
         run: npm install
       - name: Build
         run: npx grunt build
-      - name: Save build to cache
-        uses: actions/cache@v2
-        id: restore-build
-        with:
-          path: ./build/*
-          key: ${{ github.sha }}
+#       - name: Save build to cache
+#         uses: actions/cache@v2
+#         id: restore-build
+#         with:
+#           path: ./build/*
+#           key: ${{ github.sha }}
 
   Playwright:
     name: Playwright test - WP ${{ matrix.wpCoreVersion }} on PHP ${{ matrix.phpVersion }}
@@ -54,12 +54,12 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 14.x
-      - name: Restore build from cache
-        uses: actions/cache@v2
-        id: restore-build
-        with:
-          path: ./build/*
-          key: ${{ github.sha }}
+#       - name: Restore build from cache
+#         uses: actions/cache@v2
+#         id: restore-build
+#         with:
+#           path: ./build/*
+#           key: ${{ github.sha }}
       - name: Update wp-env.json file
         env:
           PHP_VERSION: ${{ matrix.phpVersion }}
@@ -85,9 +85,9 @@ jobs:
       - name: Run Playwright tests
         run: |
           npm run test:playwright
-      - uses: actions/upload-artifact@v2
-        if: failure()
-        with:
-          name: playwright-test-results
-          path: test-results/
-          retention-days: 14
+#       - uses: actions/upload-artifact@v2
+#         if: failure()
+#         with:
+#           name: playwright-test-results
+#           path: test-results/
+#           retention-days: 14
