@@ -211,7 +211,7 @@ class Widget_Progress extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'bar_height',
 			[
 				'label' => esc_html__( 'Height', 'elementor' ),
@@ -222,7 +222,7 @@ class Widget_Progress extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'bar_border_radius',
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor' ),
