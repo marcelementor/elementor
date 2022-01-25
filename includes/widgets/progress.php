@@ -134,7 +134,7 @@ class Widget_Progress extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'display_percentage',
 			[
 				'label' => esc_html__( 'Display Percentage', 'elementor' ),
@@ -143,6 +143,12 @@ class Widget_Progress extends Widget_Base {
 				'options' => [
 					'show' => esc_html__( 'Show', 'elementor' ),
 					'hide' => esc_html__( 'Hide', 'elementor' ),
+				],
+				'selectors_dictionary' => [
+					'show' => 'block',
+					'hide' => 'none',				],
+				'selectors' => [
+					'{{WRAPPER}} .elementor-progress-wrapper .elementor-progress-percentage' => 'display: {{VALUE}};',
 				],
 			]
 		);
@@ -205,7 +211,7 @@ class Widget_Progress extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'bar_height',
 			[
 				'label' => esc_html__( 'Height', 'elementor' ),
@@ -216,7 +222,7 @@ class Widget_Progress extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'bar_border_radius',
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor' ),
@@ -367,9 +373,7 @@ class Widget_Progress extends Widget_Base {
 		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
 			<div <?php $this->print_render_attribute_string( 'progress-bar' ); ?>>
 				<span <?php $this->print_render_attribute_string( 'inner_text' ); ?>><?php $this->print_unescaped_setting( 'inner_text' ); ?></span>
-				<?php if ( 'hide' !== $settings['display_percentage'] ) { ?>
-					<span class="elementor-progress-percentage"><?php echo $progress_percentage; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>%</span>
-				<?php } ?>
+				<span class="elementor-progress-percentage"><?php echo $progress_percentage; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>%</span>
 			</div>
 		</div>
 		<?php
@@ -418,9 +422,7 @@ class Widget_Progress extends Widget_Base {
 		<div {{{ view.getRenderAttributeString( 'progressWrapper' ) }}}>
 			<div class="elementor-progress-bar" data-max="{{ progress_percentage }}">
 				<span {{{ view.getRenderAttributeString( 'inner_text' ) }}}>{{{ settings.inner_text }}}</span>
-				<# if ( 'hide' !== settings.display_percentage ) { #>
-					<span class="elementor-progress-percentage">{{{ progress_percentage }}}%</span>
-				<# } #>
+				<span class="elementor-progress-percentage">{{{ progress_percentage }}}%</span>
 			</div>
 		</div>
 		<?php
