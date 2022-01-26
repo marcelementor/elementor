@@ -180,7 +180,7 @@ trait Button_Trait {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'icon_indent',
 			[
 				'label' => esc_html__( 'Icon Spacing', 'elementor' ),
@@ -379,7 +379,7 @@ trait Button_Trait {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'border_radius',
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor' ),
