@@ -291,7 +291,7 @@ class Widget_Icon_List extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'divider_weight',
 			[
 				'label' => esc_html__( 'Weight', 'elementor' ),
@@ -333,7 +333,7 @@ class Widget_Icon_List extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'divider_height',
 			[
 				'label' => esc_html__( 'Height', 'elementor' ),
