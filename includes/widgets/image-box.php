@@ -316,7 +316,7 @@ class Widget_Image_Box extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'image_opacity',
 			[
 				'label' => esc_html__( 'Opacity', 'elementor' ),
@@ -370,7 +370,7 @@ class Widget_Image_Box extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'image_opacity_hover',
 			[
 				'label' => esc_html__( 'Opacity', 'elementor' ),
