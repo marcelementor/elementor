@@ -586,7 +586,7 @@ class Widget_Divider extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'weight',
 			[
 				'label' => esc_html__( 'Weight', 'elementor' ),
@@ -816,7 +816,7 @@ class Widget_Divider extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'icon_padding',
 			[
 				'label' => esc_html__( 'Padding', 'elementor' ),
@@ -933,7 +933,7 @@ class Widget_Divider extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'icon_border_width',
 			[
 				'label' => esc_html__( 'Border Width', 'elementor' ),
@@ -947,7 +947,7 @@ class Widget_Divider extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'border_radius',
 			[
 				'label' => esc_html__( 'Border Radius', 'elementor' ),
