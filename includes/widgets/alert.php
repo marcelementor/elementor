@@ -188,7 +188,7 @@ class Widget_Alert extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'border_left-width',
 			[
 				'label' => esc_html__( 'Left Border Width', 'elementor' ),
