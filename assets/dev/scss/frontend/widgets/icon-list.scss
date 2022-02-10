@@ -108,31 +108,18 @@ $breakpoints: (
 	}
 }
 
-@mixin loopIconListItem( $breakpoints ) {
-	@each $i, $breakpoint in $breakpoints {
-		@media ( #{ map-get( $breakpoint, queryCondition ) map-get( $breakpoint, querySize ) } ) {
-			@include iconListItem( #{ map-get( $breakpoint, device ) } );
-		}
-	}
-}
-
 @mixin iconListItemLeft( $device ) {
 	&.elementor-element.elementor-icon-list#{ $device }--layout-{
 
 		&inline {
 
-			.elementor-icon-list-item {
-				justify-content: getValueByDirection(flex-start, flex-end);
+			&.elementor-align-left {
+
+				.elementor-icon-list-item {
+					justify-content: getValueByDirection(flex-start, flex-end);
+				}
 			}
 
-		}
-	}
-}
-
-@mixin loopIconListItemLeft( $breakpoints ) {
-	@each $i, $breakpoint in $breakpoints {
-		@media ( #{ map-get( $breakpoint, queryCondition ) map-get( $breakpoint, querySize ) } ) {
-			@include iconListItemLeft( #{ map-get( $breakpoint, device ) } );
 		}
 	}
 }
@@ -142,18 +129,27 @@ $breakpoints: (
 
 		&inline {
 
-			.elementor-icon-list-item {
-				justify-content: center;
-			}
+			&.elementor-align-center {
+		
+				.elementor-icon-list-item {
+					justify-content: center;
+				}
 
+			}
 		}
 	}
 }
 
-@mixin loopIconListItemCenter( $breakpoints ) {
+@mixin loopIconListItem( $breakpoints, $type ) {
 	@each $i, $breakpoint in $breakpoints {
 		@media ( #{ map-get( $breakpoint, queryCondition ) map-get( $breakpoint, querySize ) } ) {
-			@include iconListItemCenter( #{ map-get( $breakpoint, device ) } );
+			@if 'list' == $type {
+				@include iconListItem( #{ map-get( $breakpoint, device ) } );
+			} @else if 'left' == $type {
+				@include iconListItemLeft( #{ map-get( $breakpoint, device ) } );
+			} @else if 'center' == $type {
+				@include iconListItemCenter( #{ map-get( $breakpoint, device ) } );
+			}
 		}
 	}
 }
@@ -217,7 +213,7 @@ $breakpoints: (
 		}
 	}
 
-	@include loopIconListItem( $breakpoints );
+	@include loopIconListItem( $breakpoints, 'list' );
 
 	.elementor-icon-list-icon + .elementor-icon-list-text {
 		align-self: center;
