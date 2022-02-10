@@ -89,7 +89,11 @@ class Widget_Icon_List extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$view_args = [
+			'view_control_prefix_class' => 'elementor-icon-list%s--layout-',
+		];
+
+		$this->add_responsive_control(
 			'view',
 			[
 				'label' => esc_html__( 'Layout', 'elementor' ),
@@ -106,9 +110,10 @@ class Widget_Icon_List extends Widget_Base {
 					],
 				],
 				'render_type' => 'template',
-				'classes' => 'elementor-control-start-end',
-				'style_transfer' => true,
-				'prefix_class' => 'elementor-icon-list--layout-',
+				// 'classes' => 'elementor-control-start-end',
+				// 'style_transfer' => true,
+				// 'prefix_class' => 'elementor-icon-list--layout-',
+				'prefix_class' => $view_args['view_control_prefix_class'],
 			]
 		);
 

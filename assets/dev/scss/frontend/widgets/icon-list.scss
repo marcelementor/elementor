@@ -2,6 +2,162 @@
 // Icon List
 //
 
+$breakpoints: (
+	0: (
+		device: '-widescreen',
+		querySize: $screen-widescreen-min,
+		queryCondition: 'max-width: ',
+	),
+	1: (
+		device: '-laptop',
+		querySize: $screen-laptop-max,
+		queryCondition: 'max-width: ',
+	),
+	2: (
+		device: '-tablet_extra',
+		querySize: $screen-tablet-extra-max,
+		queryCondition: 'max-width: ',
+	),
+	3: (
+		device: '-tablet',
+		querySize: $screen-tablet-max,
+		queryCondition: 'max-width: ',
+	),
+	4: (
+		device: '-mobile_extra',
+		querySize: $screen-mobile-extra-max,
+		queryCondition: 'max-width: ',
+	),
+	5: (
+		device: '-mobile_extra',
+		querySize: $screen-mobile-extra-max,
+		queryCondition: 'max-width: ',
+	),
+	6: (
+		device: '-mobile',
+		querySize: $screen-mobile-max,
+		queryCondition: 'max-width: ',
+	),
+);
+
+@mixin iconListItem( $device ) {
+
+	&.elementor-element.elementor-icon-list#{ $device }--layout-{
+
+		&inline {
+
+			.elementor-widget-container {
+				overflow: hidden;
+			}
+
+			.elementor-icon-list-items {
+
+				margin-right: -8px;
+				margin-left: -8px;
+
+				.elementor-icon-list-item {
+					margin-right: 8px;
+					margin-left: 8px;
+
+					&:after {
+						width: auto;
+						left: auto;
+						right: auto;
+						position: relative;
+						height: 100%;
+						border-top: 0;
+						border-bottom: 0;
+						border-right: 0;
+						border-left-width: 1px;
+						border-style: solid;
+						@include end(-8px);
+					}
+
+				}
+			}
+		}
+
+		&traditional {
+
+			.elementor-icon-list-items {
+				list-style-type: none;
+				margin: 0;
+				padding: 0;
+				display: block;
+			}
+		
+			.elementor-icon-list-item {
+				margin: 0;
+				padding: 0;
+				position: relative;
+		
+				&:after {
+					position: absolute;
+					bottom: 0;
+					width: 100%;
+				}
+		
+				&, a {
+					display: flex;
+					align-items: center;
+					font-size: inherit;
+				}
+
+			}
+		}
+	}
+}
+
+@mixin loopIconListItem( $breakpoints ) {
+	@each $i, $breakpoint in $breakpoints {
+		@media ( #{ map-get( $breakpoint, queryCondition ) map-get( $breakpoint, querySize ) } ) {
+			@include iconListItem( #{ map-get( $breakpoint, device ) } );
+		}
+	}
+}
+
+@mixin iconListItemLeft( $device ) {
+	&.elementor-element.elementor-icon-list#{ $device }--layout-{
+
+		&inline {
+
+			.elementor-icon-list-item {
+				justify-content: getValueByDirection(flex-start, flex-end);
+			}
+
+		}
+	}
+}
+
+@mixin loopIconListItemLeft( $breakpoints ) {
+	@each $i, $breakpoint in $breakpoints {
+		@media ( #{ map-get( $breakpoint, queryCondition ) map-get( $breakpoint, querySize ) } ) {
+			@include iconListItemLeft( #{ map-get( $breakpoint, device ) } );
+		}
+	}
+}
+
+@mixin iconListItemCenter( $device ) {
+	&.elementor-element.elementor-icon-list#{ $device }--layout-{
+
+		&inline {
+
+			.elementor-icon-list-item {
+				justify-content: center;
+			}
+
+		}
+	}
+}
+
+@mixin loopIconListItemCenter( $breakpoints ) {
+	@each $i, $breakpoint in $breakpoints {
+		@media ( #{ map-get( $breakpoint, queryCondition ) map-get( $breakpoint, querySize ) } ) {
+			@include iconListItemCenter( #{ map-get( $breakpoint, device ) } );
+		}
+	}
+}
+
 .elementor-widget {
 	$e-icon-list-svg-icon-size: var(--e-icon-list-icon-size, 1em);
 
@@ -60,6 +216,8 @@
 			font-size: inherit;
 		}
 	}
+
+	@include loopIconListItem( $breakpoints );
 
 	.elementor-icon-list-icon + .elementor-icon-list-text {
 		align-self: center;
