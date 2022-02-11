@@ -54,8 +54,11 @@ $breakpoints: (
 
 				margin-right: -8px;
 				margin-left: -8px;
+				display: flex;
+				flex-wrap: wrap;
 
 				.elementor-icon-list-item {
+					word-break: break-word;
 					margin-right: 8px;
 					margin-left: 8px;
 
@@ -84,58 +87,110 @@ $breakpoints: (
 				margin: 0;
 				padding: 0;
 				display: block;
-			}
-		
-			.elementor-icon-list-item {
-				margin: 0;
-				padding: 0;
-				position: relative;
-		
-				&:after {
-					position: absolute;
-					bottom: 0;
-					width: 100%;
-				}
-		
-				&, a {
-					display: flex;
-					align-items: center;
-					font-size: inherit;
+				word-break: unset;
+
+				.elementor-icon-list-item {
+					margin: 0;
+					padding: 0;
+					position: relative;
+			
+					&:after {
+						position: absolute;
+						bottom: 0;
+						width: 100%;
+					}
+			
+					&, a {
+						display: flex;
+						align-items: center;
+						font-size: inherit;
+					}
+	
 				}
 
 			}
+		
 		}
 	}
 }
 
-@mixin iconListItemLeft( $device ) {
-	&.elementor-element.elementor-icon-list#{ $device }--layout-{
+@mixin iconListItemAlignment( $device ) {
 
-		&inline {
+	&.elementor#{ $device }-align-center {
 
-			&.elementor-align-left {
+		.elementor-icon-list-items { 
+			justify-content: center;
+		}
 
-				.elementor-icon-list-item {
-					justify-content: getValueByDirection(flex-start, flex-end);
-				}
+		.elementor-icon-list-item {
+
+			&, a {
+				justify-content: center;
+			}
+
+			&:after {
+				margin: auto;
 			}
 
 		}
 	}
-}
 
-@mixin iconListItemCenter( $device ) {
-	&.elementor-element.elementor-icon-list#{ $device }--layout-{
+	&.elementor#{ $device }-align-left {
 
-		&inline {
+		.elementor-icon-list-items {
+			justify-content: getValueByDirection( flex-start, flex-end );
+		}
 
-			&.elementor-align-center {
-		
-				.elementor-icon-list-item {
-					justify-content: center;
-				}
+		.elementor-icon-list-item {
 
+			&, a {
+				justify-content: getValueByDirection(flex-start, flex-end);
+				text-align: left;
 			}
+		}
+
+	}
+
+	&.elementor#{ $device }-align-right {
+
+		.elementor-icon-list-items {
+			justify-content: getValueByDirection( flex-end, flex-start );
+		}
+
+		.elementor-icon-list-item {
+
+			&, a {
+				justify-content: getValueByDirection(flex-end, flex-start);
+				text-align: right;
+			}
+
+			&:after {
+				margin: unset;
+			}
+
+		}
+
+	}
+
+	&:not(.elementor#{ $device }-align-right) {
+
+		.elementor-icon-list-item {
+
+			&:after {
+				@include start(0);
+			}
+
+		}
+	}
+
+	&:not(.elementor#{ $device }-align-left) {
+
+		.elementor-icon-list-item {
+
+			&:after {
+				@include end(0);
+			}
+
 		}
 	}
 }
@@ -145,10 +200,8 @@ $breakpoints: (
 		@media ( #{ map-get( $breakpoint, queryCondition ) map-get( $breakpoint, querySize ) } ) {
 			@if 'list' == $type {
 				@include iconListItem( #{ map-get( $breakpoint, device ) } );
-			} @else if 'left' == $type {
-				@include iconListItemLeft( #{ map-get( $breakpoint, device ) } );
-			} @else if 'center' == $type {
-				@include iconListItemCenter( #{ map-get( $breakpoint, device ) } );
+			} @else if 'alignment' == $type {
+				@include iconListItemAlignment( map-get( $breakpoint, device ) );
 			}
 		}
 	}
@@ -259,7 +312,8 @@ $breakpoints: (
 
 		.elementor-icon-list-item {
 
-			&, a {
+			&,
+			a {
 				justify-content: center;
 			}
 
@@ -277,7 +331,8 @@ $breakpoints: (
 
 		.elementor-icon-list-item {
 
-			&, a {
+			&, 
+			a {
 				justify-content: getValueByDirection(flex-start, flex-end);
 				text-align: left;
 			}
@@ -292,7 +347,8 @@ $breakpoints: (
 
 		.elementor-icon-list-item {
 
-			&, a {
+			&, 
+			a {
 				justify-content: getValueByDirection(flex-end, flex-start);
 				text-align: right;
 			}
@@ -323,143 +379,6 @@ $breakpoints: (
 		}
 	}
 
-	@media (max-width: $screen-tablet-max) {
-		&.elementor-tablet-align-center {
+	@include loopIconListItem( $breakpoints, 'alignment' );
 
-			.elementor-icon-list-items {
-				justify-content: center;
-			}
-
-			.elementor-icon-list-item {
-
-				&, a {
-					justify-content: center;
-				}
-
-				&:after {
-					margin: auto;
-				}
-			}
-		}
-
-		&.elementor-tablet-align-left {
-
-			.elementor-icon-list-items {
-				justify-content: getValueByDirection( flex-start, flex-end );
-			}
-
-			.elementor-icon-list-item {
-
-				&, a {
-					justify-content: getValueByDirection( flex-start, flex-end );
-					text-align: left;
-				}
-			}
-		}
-
-		&.elementor-tablet-align-right {
-
-			.elementor-icon-list-items {
-				justify-content: getValueByDirection( flex-end, flex-start );
-			}
-
-			.elementor-icon-list-item {
-
-				&, a {
-					justify-content: getValueByDirection( flex-end, flex-start );
-					text-align: right;
-				}
-			}
-		}
-
-		&:not(.elementor-tablet-align-right) {
-
-			.elementor-icon-list-item {
-
-				&:after {
-					@include start(0);
-				}
-			}
-		}
-
-		&:not(.elementor-tablet-align-left) {
-
-			.elementor-icon-list-item {
-
-				&:after {
-					@include end(0);
-				}
-			}
-		}
-	}
-
-	@media (max-width: $screen-mobile-max) {
-		&.elementor-mobile-align-center {
-
-			.elementor-icon-list-items {
-				justify-content: center;
-			}
-
-			.elementor-icon-list-item {
-
-				&, a {
-					justify-content: center;
-				}
-
-				&:after {
-					margin: auto;
-				}
-			}
-		}
-
-		&.elementor-mobile-align-left {
-
-			.elementor-icon-list-items {
-				justify-content: getValueByDirection( flex-start, flex-end );
-			}
-
-			.elementor-icon-list-item {
-
-				&, a {
-					justify-content: getValueByDirection( flex-start, flex-end );
-					text-align: left;
-				}
-			}
-		}
-
-		&.elementor-mobile-align-right {
-
-			.elementor-icon-list-items {
-				justify-content: getValueByDirection( flex-end, flex-start );
-			}
-
-			.elementor-icon-list-item {
-
-				&, a {
-					justify-content: getValueByDirection( flex-end, flex-start );
-					text-align: right;
-				}
-			}
-		}
-
-		&:not(.elementor-mobile-align-right) {
-
-			.elementor-icon-list-item {
-
-				&:after {
-					@include start(0);
-				}
-			}
-		}
-
-		&:not(.elementor-mobile-align-left) {
-
-			.elementor-icon-list-item {
-
-				&:after {
-					@include end(0);
-				}
-			}
-		}
-	}
 }
