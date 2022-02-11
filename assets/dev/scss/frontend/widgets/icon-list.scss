@@ -6,7 +6,7 @@ $breakpoints: (
 	0: (
 		device: '-widescreen',
 		querySize: $screen-widescreen-min,
-		queryCondition: 'max-width: ',
+		queryCondition: 'min-width: ',
 	),
 	1: (
 		device: '-laptop',
