@@ -118,6 +118,21 @@ class Widget_Icon extends Widget_Base {
 		);
 
 		$this->add_control(
+			'original_dimensions',
+			[
+				'label' => esc_html__( 'Original Dimensions', 'elementor' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'elementor' ),
+				'label_off' => esc_html__( 'No', 'elementor' ),
+				'prefix_class' => 'original-dimensions-',
+				'render_type' => 'template',
+				'condition' => [
+					'selected_icon[library]' => 'svg',
+				],
+			]
+		);
+
+		$this->add_control(
 			'view',
 			[
 				'label' => esc_html__( 'View', 'elementor' ),
@@ -304,7 +319,7 @@ class Widget_Icon extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .elementor-icon' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .elementor-icon' => '--icon-size: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]

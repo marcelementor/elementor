@@ -23,7 +23,7 @@
 	line-height: 1;
 	transition: $transition-hover;
 	color: $gray;
-	font-size: 50px;
+	font-size: var(--icon-size, 50px);
 	text-align: center;
 
 	&:hover {
@@ -53,6 +53,17 @@
 	&-circle {
 		.elementor-icon {
 			border-radius: 50%;
+		}
+	}
+}
+
+.elementor-widget-icon {
+
+	&.original-dimensions-yes {
+
+		svg {
+			height: 100%;
+			width: var(--icon-size, 100%);
 		}
 	}
 }
