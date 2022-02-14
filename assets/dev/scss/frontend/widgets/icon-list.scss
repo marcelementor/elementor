@@ -72,12 +72,18 @@ $breakpoints: (
 						border-left-width: 1px;
 						border-style: solid;
 						@include end(-8px);
-						#{$start}: var(--e-icon-list-space-between, auto);
-						#{$end}: auto;
+						@include end( var(--e-icon-list-space-between, auto) );
+						@include start( auto );
 					}
 
 					&:not(:last-child) {
 						padding-bottom: unset;
+						&:after {
+							border-left-style: var(--e-icon-list-divider-style, 0);
+							border-top-style: var(--e-icon-list-divider-style, 0);
+							border-left-width: var(--e-icon-list-divider-width);
+							border-top-width: unset;
+						}
 					}
 					&:not(:first-child) {
 						margin-top: unset;
@@ -119,6 +125,12 @@ $breakpoints: (
 
 					&:not(:last-child) {
 						padding-bottom: var(--e-icon-list-space-between);
+						&:after {
+							border-left-style: unset;
+							border-top-style: unset;
+							border-top-width: var(--e-icon-list-divider-weight);
+							border-left-width: unset;
+						}
 					}
 					&:not(:first-child) {
 						margin-top: var(--e-icon-list-space-between);
