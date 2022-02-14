@@ -52,20 +52,18 @@ $breakpoints: (
 
 			.elementor-icon-list-items {
 
-				margin-right: -8px;
-				margin-left: -8px;
 				display: flex;
 				flex-wrap: wrap;
+				margin-left: var(--e-icon-list-space-between-negative, -8px);
+				margin-right: var(--e-icon-list-space-between-negative, -8px);				
 
 				.elementor-icon-list-item {
 					word-break: break-word;
-					margin-right: 8px;
-					margin-left: 8px;
+					margin-left: var(--e-icon-list-space-between, 8px);
+					margin-right: var(--e-icon-list-space-between, 8px);				
 
 					&:after {
 						width: auto;
-						left: auto;
-						right: auto;
 						position: relative;
 						height: 100%;
 						border-top: 0;
@@ -74,6 +72,15 @@ $breakpoints: (
 						border-left-width: 1px;
 						border-style: solid;
 						@include end(-8px);
+						#{$start}: var(--e-icon-list-space-between, auto);
+						#{$end}: auto;
+					}
+
+					&:not(:last-child) {
+						padding-bottom: unset;
+					}
+					&:not(:first-child) {
+						margin-top: unset;
 					}
 
 				}
@@ -88,11 +95,15 @@ $breakpoints: (
 				padding: 0;
 				display: block;
 				word-break: unset;
+				margin-left: unset;
+				margin-left: unset;
 
 				.elementor-icon-list-item {
 					margin: 0;
 					padding: 0;
 					position: relative;
+					margin-left: unset;
+					margin-left: unset;
 			
 					&:after {
 						position: absolute;
@@ -104,6 +115,13 @@ $breakpoints: (
 						display: flex;
 						align-items: center;
 						font-size: inherit;
+					}
+
+					&:not(:last-child) {
+						padding-bottom: var(--e-icon-list-space-between);
+					}
+					&:not(:first-child) {
+						margin-top: var(--e-icon-list-space-between);
 					}
 	
 				}
