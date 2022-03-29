@@ -2,6 +2,7 @@
 
 namespace Elementor\Core\Kits\Documents\Tabs;
 
+use Elementor\Plugin;
 use Elementor\Controls_Manager;
 use Elementor\Core\Base\Document;
 use Elementor\Core\Files\Uploads_Manager;
@@ -63,10 +64,14 @@ class Settings_Site_Identity extends Tab_Base {
 			'site_name',
 			[
 				'label' => esc_html__( 'Site Name', 'elementor' ),
+				'type' => Controls_Manager::TEXT,
 				'default' => get_option( 'blogname' ),
 				'placeholder' => esc_html__( 'Choose name', 'elementor' ),
 				'label_block' => true,
-				'export' => false,
+				'dynamic' => [
+					'active' => true,
+				],
+				// 'export' => false,
 			]
 		);
 
@@ -77,7 +82,7 @@ class Settings_Site_Identity extends Tab_Base {
 				'default' => get_option( 'blogdescription' ),
 				'placeholder' => esc_html__( 'Choose description', 'elementor' ),
 				'label_block' => true,
-				'export' => false,
+				// 'export' => false,
 			]
 		);
 
@@ -92,7 +97,7 @@ class Settings_Site_Identity extends Tab_Base {
 					'url' => $custom_logo_src ? $custom_logo_src[0] : '',
 				],
 				'description' => esc_html__( 'Suggested image dimensions: 350 × 100 pixels.', 'elementor' ),
-				'export' => false,
+				// 'export' => false,
 			]
 		);
 
@@ -107,12 +112,29 @@ class Settings_Site_Identity extends Tab_Base {
 					'url' => $site_icon_src ? $site_icon_src[0] : '',
 				],
 				'description' => esc_html__( 'Suggested favicon dimensions: 512 × 512 pixels.', 'elementor' ),
-				'export' => false,
+				// 'export' => false,
 			]
 		);
 
+		// $cmm = \Elementor\Plugin::$instance->controls_manager;
+		// $controls2 = $this->Controls_Manager->get_controls();
+		// $kit = \Elementor\Plugin::$instance->kits_manager->get_active_kit_for_frontend();
+		// $kits = $kit->get_controls();
+
+		// $document = \Elementor\Plugin::$instance->documents->get( get_the_id() );
+		// $docs = $document->get_controls();
+
+		// $controlst = \Elementor\Plugin::$instance->controls_manager->get_controls();
+		// $test = \Elementor\Plugin::$instance->controls_manager->register_controls();
+
+
+
 		$this->end_controls_section();
 	}
+
+	// public function before_save( array $data ) {
+	// 	return $data;
+	// }
 
 	public function on_save( $data ) {
 		if (
@@ -124,6 +146,92 @@ class Settings_Site_Identity extends Tab_Base {
 		) {
 			return;
 		}
+
+		// do_action( 'elementor/controls/register' );
+		$abc = [];
+		$data['settings']['dapper'] = $abc;
+		$data['app'] = [];
+		// $data['settings']['site_name'] = '123';
+		$all_settings = $settings = $data['settings'];
+
+		// $cm = new Controls_Manager();
+		// $controls = $cm->get_controls();
+		// $controls = Plugin::$instance->controls_manager->get_controls();
+		// $controls = \Elementor\Plugin::$instance->controls_manager->get_controls();
+
+		// $controls = Plugin::$instance->controls_manager->get_controls();
+		// $document = Plugin::$instance->documents->get_doc_or_auto_save( get_the_id() );
+		// $document = Plugin::$instance->documents->get_doc_or_auto_save( $this->parent->get_id() );
+		// $document = Plugin::$instance->documents->get_doc_or_auto_save( $this->get_id() );
+		$document = Plugin::$instance->documents->get_doc_or_auto_save( get_the_id() );
+		$controls = $document->get_controls();
+
+		foreach ( $controls as $control ) {
+			$control_name = $control['name'];
+			$test = $control['type'];
+			// $control_obj = $cm->get_control( $control['type'] );
+			$control_obj = Plugin::$instance->controls_manager->get_control( $control['type'] );
+		
+			// if ( ! $control_obj instanceof Base_Data_Control ) {
+			// 	continue;
+			// } else {
+			// 	$cont = false;
+			// }
+
+			// if ( $control_obj instanceof Control_Repeater ) {
+			// 	if ( ! isset( $settings[ $control_name ] ) ) {
+			// 		continue;
+			// 	}
+
+			// 	foreach ( $settings[ $control_name ] as & $field ) {
+			// 		$field = $this->parse_dynamic_settings( $field, $control['fields'], $field );
+			// 	}
+
+			// 	continue;
+			// }
+
+			$dynamic_settings = $control_obj->get_settings( 'dynamic' );
+
+			
+
+			if ( ! $dynamic_settings ) {
+				$dynamic_settings = [];
+			}
+
+			if ( ! empty( $control['dynamic'] ) ) {
+				$dynamic_settings = array_merge( $dynamic_settings, $control['dynamic'] );
+			}
+
+			$tags_manager = Plugin::$instance->dynamic_tags;
+
+			if ( empty( $dynamic_settings ) || ! isset( $all_settings[ $tags_manager::DYNAMIC_SETTING_KEY ][ $control_name ] ) ) {
+				continue;
+			}
+
+			if ( ! empty( $dynamic_settings['active'] ) && ! empty( $all_settings[ $tags_manager::DYNAMIC_SETTING_KEY ][ $control_name ] ) ) {
+				$parsed_value = $control_obj->parse_tags( $all_settings[ $tags_manager::DYNAMIC_SETTING_KEY ][ $control_name ], $dynamic_settings );
+
+				$dynamic_property = ! empty( $dynamic_settings['property'] ) ? $dynamic_settings['property'] : null;
+
+				if ( $dynamic_property ) {
+					$settings[ $control_name ][ $dynamic_property ] = $parsed_value;
+				} else {
+					$settings[ $control_name ] = $parsed_value;
+				}
+			}
+		}
+
+		$data['settings'] = $settings;
+
+		// $kit = Controls_$tags_manager::get_mine();
+
+		// $kit = Plugin::Elementor()->Controls_Manager->get_mine;
+		// $controls = Plugin::Elementor()->Controls_Manager->get_controls();
+		$tk = $kit;
+		$nm = $data['settings'];
+		// $document = Plugin::Elementor()->documents->get_doc_or_auto_save_date( $page_id );
+		$mydata = $data;
+		$tet = $element;
 
 		if ( isset( $data['settings']['site_name'] ) ) {
 			update_option( 'blogname', $data['settings']['site_name'] );
