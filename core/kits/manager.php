@@ -2,7 +2,6 @@
 namespace Elementor\Core\Kits;
 
 use Elementor\Core\Base\Document;
-// use Elementor\Controls_Manager;
 use Elementor\Core\Kits\Controls\Repeater;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;

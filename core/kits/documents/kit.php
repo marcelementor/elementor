@@ -212,7 +212,6 @@ class Kit extends PageBase {
 	 */
 	private function register_tabs() {
 		$tabs = [
-			// 'settings-site-identity' => Tabs\Settings_Site_Identity::class,
 			'global-colors' => Tabs\Global_Colors::class,
 			'global-typography' => Tabs\Global_Typography::class,
 			'theme-style-typography' => Tabs\Theme_Style_Typography::class,
