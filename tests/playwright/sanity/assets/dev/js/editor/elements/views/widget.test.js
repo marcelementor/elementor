@@ -11,10 +11,8 @@ test.describe( `$e.run( 'editor/elements/views/widget' )`, () => {
 		await editor.addWidget( 'image-carousel' );
 		await editor.getPreviewFrame().waitForSelector( '.elementor-widget .elementor-widget-empty-icon' );
 
-		const emptyViewPlaceholderCount = await editor.getPreviewFrame().locator( '.elementor-widget-image-carousel .elementor-widget-empty-icon' ).count();
-
 		// Assert.
-		expect( emptyViewPlaceholderCount ).toBe( 1 );
+		await expect( editor.getPreviewFrame().locator( '.elementor-widget .elementor-widget-empty-icon' ) ).toBeVisible();
 	} );
 
 	test( 'Check if the empty placeholder is displayed inside the Sidebar widget', async ( { page }, testInfo ) => {
