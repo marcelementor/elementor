@@ -708,8 +708,6 @@ class Widget_Image extends Widget_Base {
 			return;
 		}
 
-		var_dump($settings);
-
 		$has_caption = $this->has_caption( $settings );
 
 		$link = $this->get_link_url( $settings );
