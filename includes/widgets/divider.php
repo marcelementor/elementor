@@ -1084,20 +1084,20 @@ class Widget_Divider extends Widget_Base {
 	 * @since 1.0.0
 	 * @access protected
 	 */
-	protected function render() {
+	protected function render_optimised() {
 		$settings = $this->get_settings_for_display();
 		$svg_code = $this->build_svg();
 		$has_icon = 'line_icon' === ( $settings['look'] ) && ! empty( $settings['icon'] );
 		$has_text = 'line_text' === ( $settings['look'] ) && ! empty( $settings['text'] );
 
-		$this->add_render_attribute( 'wrapper', 'class', 'elementor-divider' );
+		$this->add_render_attribute( '_wrapper', 'class', 'elementor-divider' );
 
 		if ( ! empty( $svg_code ) ) {
-			$this->add_render_attribute( 'wrapper', 'style', '--divider-pattern-url: url("data:image/svg+xml,' . $this->svg_to_data_uri( $svg_code ) . '");' );
+			$this->add_render_attribute( '_wrapper', 'style', '--divider-pattern-url: url("data:image/svg+xml,' . $this->svg_to_data_uri( $svg_code ) . '");' );
 		}
 
 		?>
-		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
+		<div <?php $this->print_render_attribute_string( '_wrapper' ); ?>>
 			<span class="elementor-divider-separator">
 			<?php if ( $has_icon ) : ?>
 				<div class="elementor-icon elementor-divider__element">
@@ -1119,5 +1119,13 @@ class Widget_Divider extends Widget_Base {
 			</span>
 		</div>
 		<?php
+	}
+
+	protected function has_widget_container(): bool {
+		return false;
+	}
+
+	protected function has_widget_wrapper(): bool {
+		return false;
 	}
 }
