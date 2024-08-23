@@ -91,52 +91,62 @@ class Module extends BaseModule {
 			return;
 		}
 
-		?>
-		<script id="elementor-gutenberg-button-switch-mode" type="text/html">
-			<div id="elementor-switch-mode">
-				<button id="elementor-switch-mode-button" type="button" class="button button-primary button-large">
-					<span class="elementor-switch-mode-on"><?php echo esc_html__( '&#8592; Back to WordPress Editor', 'elementor' ); ?></span>
-					<span class="elementor-switch-mode-off">
-						<i class="eicon-elementor-square" aria-hidden="true"></i>
-						<?php echo esc_html__( 'Edit with Elementor', 'elementor' ); ?>
-					</span>
-				</button>
-			</div>
-		</script>
+		$script = '
+		<div id="elementor-switch-mode">
+			<button id="elementor-switch-mode-button" type="button" class="button button-primary button-large">
+				<span class="elementor-switch-mode-on">' . esc_html__( '&#8592; Back to WordPress Editor', 'elementor') . '</span>
+				<span class="elementor-switch-mode-off">
+					<i class="eicon-elementor-square" aria-hidden="true"></i>
+					' . esc_html__( 'Edit with Elementor', 'elementor' ) . '
+				</span>
+			</button>
+		</div>';
 
-		<script id="elementor-gutenberg-panel" type="text/html">
-			<div id="elementor-editor">
-				<div id="elementor-go-to-edit-page-link">
-					<button id="elementor-editor-button" class="button button-primary button-hero">
-						<i class="eicon-elementor-square" aria-hidden="true"></i>
-						<?php echo esc_html__( 'Edit with Elementor', 'elementor' ); ?>
-					</button>
-					<div class="elementor-loader-wrapper">
-						<div class="elementor-loader">
-							<div class="elementor-loader-boxes">
-								<div class="elementor-loader-box"></div>
-								<div class="elementor-loader-box"></div>
-								<div class="elementor-loader-box"></div>
-								<div class="elementor-loader-box"></div>
-							</div>
+		wp_print_inline_script_tag( $script, [
+			'id' => 'elementor-gutenberg-button-switch-mode',
+			'type' => 'text/html',
+		] );
+
+		$script = '
+		<div id="elementor-editor">
+			<div id="elementor-go-to-edit-page-link">
+				<button id="elementor-editor-button" class="button button-primary button-hero">
+					<i class="eicon-elementor-square" aria-hidden="true"></i>
+					' . esc_html__( 'Edit with Elementor', 'elementor' ) . '
+				</button>
+				<div class="elementor-loader-wrapper">
+					<div class="elementor-loader">
+						<div class="elementor-loader-boxes">
+							<div class="elementor-loader-box"></div>
+							<div class="elementor-loader-box"></div>
+							<div class="elementor-loader-box"></div>
+							<div class="elementor-loader-box"></div>
 						</div>
-						<div class="elementor-loading-title"><?php echo esc_html__( 'Loading', 'elementor' ); ?></div>
 					</div>
+					<div class="elementor-loading-title">' . esc_html__( 'Loading', 'elementor' ) . '</div>
 				</div>
 			</div>
-		</script>
+		</div>';
 
-		<script id="elementor-gutenberg-button-tmpl" type="text/html">
-			<div id="elementor-edit-button-gutenberg">
-				<button id="elementor-edit-mode-button" type="button" class="button button-primary button-large">
-					<span class="elementor-edit-mode-gutenberg">
-						<i class="eicon-elementor-square" aria-hidden="true"></i>
-						<?php echo esc_html__( 'Edit with Elementor', 'elementor' ); ?>
-					</span>
-				</button>
-			</div>
-		</script>
-		<?php
+		wp_print_inline_script_tag( $script, [
+			'id' => 'elementor-gutenberg-panel',
+			'type' => 'text/html',
+		] );
+
+		$script = '
+		<div id="elementor-edit-button-gutenberg">
+			<button id="elementor-edit-mode-button" type="button" class="button button-primary button-large">
+				<span class="elementor-edit-mode-gutenberg">
+					<i class="eicon-elementor-square" aria-hidden="true"></i>
+					' . esc_html__( 'Edit with Elementor', 'elementor' ) . '
+				</span>
+			</button>
+		</div>';
+
+		wp_print_inline_script_tag( $script, [
+			'id' => 'elementor-gutenberg-button-tmpl',
+			'type' => 'text/html',
+		] );
 	}
 
 	/**

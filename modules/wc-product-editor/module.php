@@ -65,27 +65,30 @@ class Module extends BaseModule {
 		if ( ! $document ) {
 			return;
 		}
-		?>
-		<script id="elementor-woocommerce-new-editor-button" type="text/html">
-			<a id="elementor-go-to-edit-page-link" class="elementor-wc-button-wrapper" href="<?php echo esc_url( $document->get_edit_url() ); ?>">
-				<div id="elementor-editor-button" class="button button-primary button-large">
-					<i class="eicon-elementor-square" aria-hidden="true"></i>
-					<?php echo esc_html__( 'Edit with Elementor', 'elementor' ); ?>
-				</div>
-				<div class="elementor-loader-wrapper">
-					<div class="elementor-loader">
-						<div class="elementor-loader-boxes">
-							<div class="elementor-loader-box"></div>
-							<div class="elementor-loader-box"></div>
-							<div class="elementor-loader-box"></div>
-							<div class="elementor-loader-box"></div>
-						</div>
+
+		$script = '
+		<a id="elementor-go-to-edit-page-link" class="elementor-wc-button-wrapper" href="' . esc_url( $document->get_edit_url() ) . '">
+			<div id="elementor-editor-button" class="button button-primary button-large">
+				<i class="eicon-elementor-square" aria-hidden="true"></i>
+				' . esc_html__( 'Edit with Elementor', 'elementor' ) . '
+			</div>
+			<div class="elementor-loader-wrapper">
+				<div class="elementor-loader">
+					<div class="elementor-loader-boxes">
+						<div class="elementor-loader-box"></div>
+						<div class="elementor-loader-box"></div>
+						<div class="elementor-loader-box"></div>
+						<div class="elementor-loader-box"></div>
 					</div>
-					<div class="elementor-loading-title"><?php echo esc_html__( 'Loading', 'elementor' ); ?></div>
 				</div>
-			</a>
-		</script>
-		<?php
+				<div class="elementor-loading-title">' . esc_html__( 'Loading', 'elementor' ) . '</div>
+			</div>
+		</a>';
+
+		wp_print_inline_script_tag( $script, [
+			'id' => 'elementor-woocommerce-new-editor-button',
+			'type' => 'text/html',
+		] );
 	}
 
 	private function get_post_id() {
