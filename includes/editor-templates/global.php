@@ -9,6 +9,10 @@ function echo_select_your_structure_title() {
 	echo esc_html__( 'Select your structure', 'elementor' );
 }
 
+function return_select_your_structure_title() {
+	return esc_html__( 'Select your structure', 'elementor' );
+}
+
 $script_templates = [
 	'tmpl-elementor-empty-preview' => '
 		<div class="elementor-first-add">
@@ -64,7 +68,7 @@ $script_templates = [
 					</div>
 				</div>
 				<div class="e-view elementor-select-preset">
-					<div class="elementor-select-preset-title">' . echo_select_your_structure_title() . '</div>
+					<div class="elementor-select-preset-title">' . return_select_your_structure_title() . '</div>
 					<ul class="elementor-select-preset-list">
 						<# const structures = [ 10, 20, 30, 40, 21, 22, 31, 32, 33, 50, 34, 60 ];
 						structures.forEach( ( structure ) => {
@@ -76,7 +80,7 @@ $script_templates = [
 					</ul>
 				</div>
 				<div class="e-view e-con-select-preset">
-					<div class="e-con-select-preset__title">' . echo_select_your_structure_title() . '</div>
+					<div class="e-con-select-preset__title">' . return_select_your_structure_title() . '</div>
 					<div class="e-con-select-preset__list">
 						<# elementor.presetsFactory.getContainerPresets().forEach( ( preset ) => { #>
 						<div class="e-con-preset" data-preset="{{ preset }}">
@@ -86,7 +90,7 @@ $script_templates = [
 					</div>
 				</div>
 				<div class="e-view e-con-shared-styles e-con-select-preset-grid">
-					<div class="e-con-select-preset-grid__title">' . echo_select_your_structure_title() . '</div>
+					<div class="e-con-select-preset-grid__title">' . return_select_your_structure_title() . '</div>
 					<div class="e-con-select-preset-grid__list">
 						<# elementor.presetsFactory.getContainerGridPresets().forEach( ( preset ) => { #>
 						<div class="e-con-choose-grid-preset" data-structure="{{ preset }}">

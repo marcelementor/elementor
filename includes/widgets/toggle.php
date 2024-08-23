@@ -663,9 +663,11 @@ class Widget_Toggle extends Widget_Base {
 						],
 					];
 				}
-				?>
-				<script type="application/ld+json"><?php echo wp_json_encode( $json ); ?></script>
-			<?php } ?>
+
+				wp_print_inline_script_tag( wp_json_encode( $json ), [
+					'type' => 'application/ld+json',
+				] );
+			} ?>
 		</div>
 		<?php
 	}
