@@ -89,8 +89,7 @@ class Compatibility {
 			return;
 		}
 
-		?>
-		<script type="text/javascript">
+		$script_content = "
 			document.addEventListener( 'DOMContentLoaded', function() {
 				var dropdown = document.querySelector( '#split-page-title-action .dropdown' );
 
@@ -98,12 +97,15 @@ class Compatibility {
 					return;
 				}
 
-				var url = '<?php echo esc_url( Plugin::$instance->documents->get_create_new_post_url( $typenow ) ); ?>';
+				var url = '" . esc_url( Plugin::$instance->documents->get_create_new_post_url( $typenow ) ) . "';
 
-				dropdown.insertAdjacentHTML( 'afterbegin', '<a href="' + url + '">Elementor</a>' );
+				dropdown.insertAdjacentHTML('afterbegin', '<a href=\"' + url + '\">Elementor</a>');
 			} );
-		</script>
-		<?php
+		";
+
+		wp_print_inline_script_tag( $script_content, [
+			'type' => 'text/javascript',
+		] );
 	}
 
 	/**

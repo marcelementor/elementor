@@ -33,28 +33,26 @@ class Admin_Pointer {
 			'<p><a class="button button-primary" href="%s">%s</a></p>',
 			admin_url( 'admin.php?page=' . Module::PAGE_ID ),
 			esc_html__( 'Explore Add-ons', 'elementor' )
-		)
+		);
 
-		?>
-		<script>
+		wp_print_inline_script_tag( "
 			jQuery( document ).ready( function( $ ) {
 				$( '#toplevel_page_elementor' ).pointer( {
-					content: '<?php echo $pointer_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>',
+					content: '" . $pointer_content . "',
 					position: {
-						edge: <?php echo is_rtl() ? "'right'" : "'left'"; ?>,
+						edge: " . ( is_rtl() ? "'right'" : "'left'" ) . ",
 						align: 'center'
 					},
 					close: function() {
 						elementorCommon.ajax.addRequest( 'introduction_viewed', {
 							data: {
-								introductionKey: '<?php echo esc_attr( static::CURRENT_POINTER_SLUG ); ?>',
+								introductionKey: '" . esc_attr( static::CURRENT_POINTER_SLUG ) . "',
 							},
 						} );
 					}
 				} ).pointer( 'open' );
 			} );
-		</script>
-		<?php
+		");
 	}
 
 	private static function is_dismissed() {

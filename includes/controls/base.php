@@ -111,15 +111,20 @@ abstract class Base_Control extends Base_Object {
 	 * @access public
 	 */
 	final public function print_template() {
-		?>
-		<script type="text/html" id="tmpl-elementor-control-<?php echo esc_attr( $this->get_type() ); ?>-content">
-			<div class="elementor-control-content">
-				<?php
-				$this->content_template();
-				?>
+		ob_start();
+		$this->content_template();
+		$content_template = ob_get_clean();
+
+		$script_content = "
+			<div class=\"elementor-control-content\">
+				" . $content_template . "
 			</div>
-		</script>
-		<?php
+		";
+
+		wp_print_inline_script_tag( $script_content, [
+			'id' => 'tmpl-elementor-control-' . esc_attr( $this->get_type() ) . '-content',
+			'type' => 'text/html',
+		] );
 	}
 
 	/**

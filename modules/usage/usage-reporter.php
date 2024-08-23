@@ -106,8 +106,7 @@ class Usage_Reporter extends Base {
 	 */
 	private function get_remove_recalc_query_string_script() {
 		ob_start();
-		?>
-		<script>
+		wp_print_inline_script_tag( "
 			// Origin file: modules/usage/usage-reporter.php - get_remove_recalc_query_string_script()
 			{
 				const url = new URL( window.location );
@@ -118,8 +117,7 @@ class Usage_Reporter extends Base {
 
 				history.replaceState( '', window.title, url.toString() );
 			}
-		</script>
-		<?php
+		");
 
 		return ob_get_clean();
 	}

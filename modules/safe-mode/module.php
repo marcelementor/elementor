@@ -313,7 +313,8 @@ class Module extends \Elementor\Core\Base\Module {
 			</div>
 		</div>
 
-		<script>
+		<?php
+		wp_print_inline_script_tag( "
 			var ElementorSafeMode = function() {
 				var attachEvents = function() {
 					jQuery( '.elementor-disable-safe-mode' ).on( 'click', function( e ) {
@@ -350,8 +351,7 @@ class Module extends \Elementor\Core\Base\Module {
 			};
 
 			new ElementorSafeMode();
-		</script>
-		<?php
+		");
 	}
 
 	public function print_try_safe_mode() {
@@ -386,7 +386,8 @@ class Module extends \Elementor\Core\Base\Module {
 		<?php endif; ?>
 		</div>
 
-		<script>
+		<?php
+		wp_print_inline_script_tag( "
 			var ElementorTrySafeMode = function() {
 				var attachEvents = function() {
 					jQuery( '.elementor-enable-safe-mode' ).on( 'click', function( e ) {
@@ -399,10 +400,7 @@ class Module extends \Elementor\Core\Base\Module {
 						elementorCommon.ajax.addRequest(
 							'enable_safe_mode', {
 								data: {
-									editor_post_id: '<?php
-										// PHPCS - the method get_post_id is safe.
-										echo Plugin::$instance->editor->get_post_id(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-									?>',
+									editor_post_id: '" . esc_attr( Plugin::$instance->editor->get_post_id() ) . "',
 								},
 								success: function( url ) {
 									location.assign( url );
@@ -433,15 +431,15 @@ class Module extends \Elementor\Core\Base\Module {
 				};
 
 				var handleTrySafeModeNotice = function() {
-					var $notice = jQuery( '#elementor-try-safe-mode' );
+					var notice = jQuery( '#elementor-try-safe-mode' );
 
 					if ( isElementorLoaded() ) {
-						$notice.remove();
+						notice.remove();
 						return;
 					}
 
-					if ( ! $notice.data( 'visible' ) ) {
-						$notice.show().data( 'visible', true );
+					if ( ! notice.data( 'visible' ) ) {
+						notice.show().data( 'visible', true );
 					}
 
 					// Re-check after 500ms.
@@ -449,7 +447,7 @@ class Module extends \Elementor\Core\Base\Module {
 				};
 
 				var init = function() {
-					setTimeout( handleTrySafeModeNotice, <?php Utils::print_unescaped_internal_string( self::EDITOR_NOTICE_TIMEOUT ); ?> );
+					setTimeout( handleTrySafeModeNotice, " . self::EDITOR_NOTICE_TIMEOUT . " );
 
 					attachEvents();
 				};
@@ -458,9 +456,7 @@ class Module extends \Elementor\Core\Base\Module {
 			};
 
 			new ElementorTrySafeMode();
-		</script>
-
-		<?php
+		");
 	}
 
 	public function run_safe_mode() {

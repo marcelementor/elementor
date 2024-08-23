@@ -328,11 +328,14 @@ abstract class Manager {
 		$name = $this->get_name();
 
 		ob_start();
-		?>
-		<script type="text/template" id="tmpl-elementor-panel-<?php echo esc_attr( $name ); ?>-settings">
-			<?php $this->print_editor_template_content( $name ); ?>
-		</script>
-		<?php
+		$this->print_editor_template_content( $name );
+		$script_content = ob_get_clean();
+
+		ob_start();
+		wp_print_inline_script_tag( $script_content, [
+			'id' => 'tmpl-elementor-panel-' . esc_attr( $name ) . '-settings',
+			'type' => 'text/template',
+		] );
 
 		return ob_get_clean();
 	}

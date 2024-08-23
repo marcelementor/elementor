@@ -169,14 +169,16 @@ class Module extends BaseModule {
 						$this->print_report( $reports, 'raw' );
 					?>
 				</textarea>
-				<script>
+				<?php
+				wp_print_inline_script_tag( "
 					var textarea = document.getElementById( 'elementor-system-info-raw-code' );
 					var selectRange = function() {
 						textarea.setSelectionRange( 0, textarea.value.length );
 					};
 					textarea.onfocus = textarea.onblur = textarea.onclick = selectRange;
 					textarea.onfocus();
-				</script>
+				");			
+				?>
 			</div>
 			<hr>
 			<form action="<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>" method="post">

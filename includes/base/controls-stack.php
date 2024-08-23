@@ -2070,11 +2070,15 @@ abstract class Controls_Stack extends Base_Object {
 		if ( empty( $template_content ) ) {
 			return;
 		}
-		?>
-		<script type="text/html" id="tmpl-elementor-<?php echo esc_attr( $this->get_name() ); ?>-content">
-			<?php $this->print_template_content( $template_content ); ?>
-		</script>
-		<?php
+
+		ob_start();
+		$this->print_template_content( $template_content );
+		$script_content = ob_get_clean();
+
+		wp_print_inline_script_tag( $script_content, [
+			'id' => 'tmpl-elementor-' . esc_attr( $this->get_name() ) . '-content',
+			'type' => 'text/html',
+		] );
 	}
 
 	/**

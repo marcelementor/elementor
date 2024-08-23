@@ -653,25 +653,24 @@ abstract class Base_App {
 	protected function print_popup_close_script( $url ) {
 		$data = $this->get_popup_success_event_data();
 
-		?>
-		<script>
+		wp_print_inline_script_tag( "
 			if ( opener && opener !== window ) {
 				opener.jQuery( 'body' ).trigger(
-					'elementor/connect/success/<?php echo esc_attr( Utils::get_super_global_value( $_REQUEST, 'callback_id' ) ); //phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce verification is not required here. ?>',
-					<?php echo wp_json_encode( $data ); ?>
+					'elementor/connect/success/" . esc_attr( Utils::get_super_global_value( $_REQUEST, 'callback_id' ) ) . "',
+					" . wp_json_encode( $data ) . "
 				);
 
 				opener.dispatchEvent( new CustomEvent( 'elementor/connect/success' ),
-					<?php echo wp_json_encode( $data ); ?>
+					" . wp_json_encode( $data ) . "
 				);
 
 				window.close();
 				opener.focus();
 			} else {
-				location = '<?php echo esc_url( $url ); ?>';
+				location = '" . esc_url( $url ) . "';
 			}
-		</script>
-		<?php
+		");
+
 		die;
 	}
 
