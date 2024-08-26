@@ -22,6 +22,9 @@ ControlsCSSParser = elementorModules.ViewModule.extend( {
 			$stylesheet = jQuery( '<style>', { id } );
 		}
 
+		// Add a filter here:
+		$stylesheet.attr('nonce', '123abc');
+
 		return {
 			$stylesheetElement: $stylesheet,
 		};
