@@ -8,6 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Modules\ContentSanitizer\Interfaces\Sanitizable;
+use Elementor\Plugin;
 
 /**
  * Elementor heading widget.
@@ -370,9 +371,36 @@ class Widget_Heading extends Widget_Base implements Sanitizable {
 			$title = sprintf( '<a %1$s>%2$s</a>', $this->get_render_attribute_string( 'url' ), $title );
 		}
 
+		if ( Plugin::$instance->editor->is_edit_mode() ) {
+			echo $title;
+			return;
+		}
+
 		$title_html = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $settings['header_size'] ), $this->get_render_attribute_string( '_wrapper' ), $title );
 
 		// PHPCS - the variable $title_html holds safe data.
 		echo $title_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+
+	/**
+	 * Render heading widget output in the editor.
+	 *
+	 * Written as a Backbone JavaScript template and used to generate the live preview.
+	 *
+	 * @since 2.9.0
+	 * @access protected
+	 */
+	protected function content_template() {
+		?>
+		<#
+		let title = elementor.helpers.sanitize( settings.title, { ALLOW_DATA_ATTR: false } );
+
+		if ( '' !== settings.link.url ) {
+			title = '<a href="' + _.escape( settings.link.url ) + '">' + title + '</a>';
+		}
+
+		print( title );
+		#>
+		<?php
 	}
 }
