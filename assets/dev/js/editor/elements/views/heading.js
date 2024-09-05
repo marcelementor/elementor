@@ -14,6 +14,14 @@ const HeadingView = Widget.extend( {
 
 		return classes;
 	},
+
+	renderOnChange( settings ) {
+		if ( settings.changed.header_size ) {
+			// Because the entire element needs to be re-rendered if the HTML tag is to change.
+			// Maybe we can re-render only the specific child?
+			this.container.parent._renderChildren();
+		}
+	},
 } );
 
 module.exports = HeadingView;
